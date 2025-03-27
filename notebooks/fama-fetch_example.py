@@ -14,7 +14,7 @@ qqq_monthly.dropna(inplace=True)  # Drop rows with NaN values
 qqq_monthly.index = qqq_monthly.index.to_period("M")  # Convert index to year-month format
 
 # Step 2: Load Fama-French Three-Factor Data
-ff_factors_monthly = pd.read_csv("../data/F-F_Research_Data_Factors.CSV", index_col=0)
+ff_factors_monthly = pd.read_csv("../data/F-F_Research_Data_Factors_Jer.CSV", index_col=0)
 ff_factors_monthly = ff_factors_monthly[ff_factors_monthly.index.notna()]
 ff_factors_monthly = ff_factors_monthly[ff_factors_monthly.index.str.match(r"^\d{6}$")]
 ff_factors_monthly.index.names = ["Date"]
