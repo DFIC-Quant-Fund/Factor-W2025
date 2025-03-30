@@ -6,7 +6,7 @@ import statsmodels.api as sm
 
 # Step 1: Collect Monthly Returns of QQQ
 qqq_daily = yf.download("QQQ", start="2006-01-01", end="2023-12-31")
-qqq_monthly = qqq_daily["Close"].resample("M").mean()
+qqq_monthly = qqq_daily["Close"].resample("ME").mean()
 qqq_monthly.name = "QQQ"
 qqq_monthly = pd.DataFrame(qqq_monthly)
 qqq_monthly["Return"] = qqq_monthly["QQQ"].pct_change() * 100  # Calculate percentage change
@@ -82,10 +82,12 @@ plt.figure(figsize=(8, 5))
 sns.barplot(
     x="Factor",
     y="Coefficient",
+    hue="Factor", 
     data=ols_data,
     capsize=0.2,
     errorbar=None,  # Replace deprecated `ci` parameter
     palette="coolwarm",
+    legend=False, 
 )
 
 # Add error bars for confidence intervals
