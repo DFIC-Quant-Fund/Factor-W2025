@@ -63,7 +63,13 @@ class FamaFrenchRegression:
         aligned_returns = qqq_monthly.loc[qqq_monthly.index.isin(ff_factors_subset.index), "Return"]
         aligned_returns = pd.to_numeric(aligned_returns, errors="coerce")
         ff_factors_subset["Excess_Return"] = aligned_returns.values - ff_factors_subset["RF"]
-        ff_factors_subset = ff_factors_subset[["Mkt-RF", "SMB", "HML", "RF", "Excess_Return"]]
+
+        selected_factors = [factor for factor in self.factors if factor in ff_factors_subset.columns]
+        if not selected_factors:
+            raise ValueError("No valid factors found in the dataset. Check the 'self.factors' list.")
+
+        # Include only the selected factors, RF, and Excess_Return
+        ff_factors_subset = ff_factors_subset[selected_factors + ["RF", "Excess_Return"]]
         return ff_factors_subset
 
     def run_regression(self, ff_factors_subset):
