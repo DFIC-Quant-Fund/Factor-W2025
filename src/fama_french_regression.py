@@ -73,7 +73,7 @@ class FamaFrenchRegression:
         return ff_factors_subset
 
     def run_regression(self, ff_factors_subset):
-        X = sm.add_constant(ff_factors_subset[["Mkt-RF", "SMB", "HML"]]) 
+        X = sm.add_constant(ff_factors_subset[self.factors]) 
         X = X.apply(pd.to_numeric, errors="coerce")  # Ensure all values are numeric
         X = X.dropna() 
 
@@ -86,10 +86,7 @@ class FamaFrenchRegression:
 
         # Run the regression
         model = sm.OLS(y, X).fit()
-        print(model.summary())
         return model
-
-
 
     def create_fama_fetch_graph(self, model):
         # Step 5: plot
